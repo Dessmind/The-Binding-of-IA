@@ -9,7 +9,6 @@ public class PlayerHealth : MonoBehaviour
     private SpriteRenderer spriteRenderer; // Referencia al SpriteRenderer
     private PlayerUI playerUI; // Referencia a la UI del jugador
     private PlayerMovement playerMovement; // Referencia al script de movimiento
-    [SerializeField] private GameObject gameOverCanvas; // Referencia al Canvas de Game Over
 
     void Start()
     {
@@ -37,17 +36,7 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("Player ha muerto.");
-        if (playerMovement != null) // Verificar que playerMovement no sea null
-        {
-            playerMovement.SetAlive(false); // Detiene el movimiento del jugador
-        }
-
-        // Mostrar pantalla de Game Over utilizando la referencia del Canvas
-        if (gameOverCanvas != null) // Verifica que gameOverCanvas no sea null
-        {
-            gameOverCanvas.SetActive(true); // Activa el Canvas de Game Over
-        }
-
+        playerMovement.SetAlive(false); // Detiene el movimiento del jugador
         StartCoroutine(BlinkAndDisappear()); // Llama al parpadeo y desaparición
     }
 

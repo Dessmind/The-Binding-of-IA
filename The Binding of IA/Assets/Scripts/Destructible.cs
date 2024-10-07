@@ -3,8 +3,8 @@ using System.Collections; // Necesario para usar coroutines
 
 public class Destructible : MonoBehaviour
 {
-    [SerializeField] private int maxHealth = 3; // Salud máxima
-    private int currentHealth; // Salud actual
+    [SerializeField] private int maxHealth = 3;
+    private int currentHealth;
 
     [SerializeField] private float blinkDuration = 0.5f; // Duración total del parpadeo
     [SerializeField] private int blinkCount = 5; // Cantidad de parpadeos
@@ -17,7 +17,6 @@ public class Destructible : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>(); // Obtiene el componente SpriteRenderer
     }
 
-    // Método para aplicar daño
     public void TakeDamage(int damage)
     {
         currentHealth -= damage; // Reduce la salud actual
@@ -25,17 +24,10 @@ public class Destructible : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die(); // Llama al método de morir
+            Destroy(gameObject); // Destruir el objeto si su salud llega a 0
         }
     }
 
-    // Método que se llama al morir
-    private void Die()
-    {
-        Destroy(gameObject); // Destruir el objeto si su salud llega a 0
-    }
-
-    // Método para mostrar el efecto de parpadeo
     private IEnumerator Blink()
     {
         for (int i = 0; i < blinkCount; i++)

@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1339581406540768858}
   - component: {fileID: 2908666764132443570}
   - component: {fileID: 8436498769969391712}
-  m_Layer: 10
+  m_Layer: 7
   m_Name: Projectile
-  m_TagString: Bullets
+  m_TagString: Destructible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,9 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dadd0985f7d9ca43b4fdac927da4591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  lifespan: 1
-  destructionEffectPrefab: {fileID: 9115635717963567737, guid: faf0e33f40c03074483884125591ceb3, type: 3}
+  damage: 1
+  lifespan: 2
 --- !u!61 &2908666764132443570
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -155,7 +154,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2456442201796653269}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

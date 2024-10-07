@@ -28,9 +28,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isAlive) return; // Si no está vivo, no procesar el movimiento
 
-        // Obtener la entrada del usuario usando solo WASD
-        float moveX = Input.GetAxisRaw("Horizontal"); // Este será controlado por A y D
-        float moveY = Input.GetAxisRaw("Vertical"); // Este será controlado por W y S
+        // Obtener la entrada del usuario
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
         moveInput = new Vector2(moveX, moveY).normalized;
 
         // Actualizar la última dirección de movimiento solo si el jugador se mueve
@@ -54,21 +54,13 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1); // Mirar a la izquierda
         }
 
-        // Disparar solo con las teclas de flecha
-        Vector2 shootDirection = Vector2.zero;
-        if (Input.GetKey(KeyCode.UpArrow)) shootDirection.y += 1;
-        if (Input.GetKey(KeyCode.DownArrow)) shootDirection.y -= 1;
-        if (Input.GetKey(KeyCode.LeftArrow)) shootDirection.x -= 1;
-        if (Input.GetKey(KeyCode.RightArrow)) shootDirection.x += 1;
-
-        // Si hay una dirección de disparo válida
-        if (shootDirection != Vector2.zero && Time.time >= nextFireTime)
+        // Disparar si se presiona la barra espaciadora
+        if (Input.GetKey(KeyCode.Space) && Time.time >= nextFireTime)
         {
-            Shoot(shootDirection.normalized); // Disparar en la dirección indicada
+            Shoot();
             nextFireTime = Time.time + fireRate; // Actualiza el tiempo del próximo disparo
         }
     }
-
 
     private void FixedUpdate()
     {
@@ -78,8 +70,8 @@ public class PlayerMovement : MonoBehaviour
         playerRb.velocity = moveInput * speed; // Cambia la velocidad directamente
     }
 
-    // Método para disparar en la dirección proporcionada
-    private void Shoot(Vector2 direction)
+    // Método para disparar
+    private void Shoot()
     {
         if (canShootInEightDirections)
         {
@@ -88,10 +80,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // Instanciar el proyectil en la posición del jugador y en la dirección proporcionada
+            // Instanciar el proyectil en la posición del jugador y en la última dirección conocida
             GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
-            projectileRb.velocity = direction * projectileSpeed; // Asigna velocidad al proyectil
+            projectileRb.velocity = lastDirection.normalized * projectileSpeed;
         }
     }
 
@@ -140,12 +132,6 @@ public class PlayerMovement : MonoBehaviour
     // Método para cambiar el estado del jugador
     public void SetAlive(bool alive)
     {
-        isAlive = alive; // Establece el estado del jugador
-
-        if (!isAlive)
-        {
-            playerRb.velocity = Vector2.zero; // Detiene el movimiento al morir
-        }
+        isAlive = alive;
     }
-
 }
